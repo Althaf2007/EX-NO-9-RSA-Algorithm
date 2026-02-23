@@ -36,13 +36,56 @@ Step 5: **Security Foundation
 The security of RSA relies on the difficulty of factoring large numbers; thus, choosing sufficiently large prime numbers for \( p \) and \( q \) is crucial for security.
 
 ## Program:
+```
+#include <stdio.h>
 
+int gcd(int a,int b){
+    while(b!=0){ a=a%b; int t=a; a=b; b=t; }
+    return a;
+}
 
+int main(){
+    int p,q,n,phi,e=2,d=1,msg,enc,dec,i;
+    char name[50];
+    printf("Enter your name: ");
+    scanf(" %[^\n]",name);
+
+    printf("Enter prime p: ");
+    scanf("%d",&p);
+    printf("Enter prime q: ");
+    scanf("%d",&q);
+
+    n=p*q;
+    phi=(p-1)*(q-1);
+
+    while(gcd(e,phi)!=1) e++;
+
+    for(i=1;i<phi;i++)
+        if((e*i)%phi==1){ d=i; break; }
+
+    printf("Public key: (%d,%d)\n",n,e);
+    printf("Private key: (%d,%d)\n",n,d);
+
+    printf("Enter message: ");
+    scanf("%d",&msg);
+
+    enc=1; for(i=0;i<e;i++) enc=(enc*msg)%n;
+    dec=1; for(i=0;i<d;i++) dec=(dec*enc)%n;
+
+    printf("Encrypted: %d\n",enc);
+    printf("Decrypted: %d\n",dec);
+
+    return 0;
+}
+```
 
 
 ## Output:
 
+<img width="1733" height="921" alt="Screenshot 2026-02-23 112808" src="https://github.com/user-attachments/assets/bc06a40a-8831-4483-b0fe-090c7e5ec294" />
 
+## Result:
 
+Thus Implementing RSA Encryption Algorithm in Cryptography has been done successfully.
 ## Result:
  The program is executed successfully.
